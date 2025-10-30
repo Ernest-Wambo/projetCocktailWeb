@@ -1,0 +1,22 @@
+# Fichiers temporaires / cache
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+cache/
+logs/
+tmp/
+
+# Config perso
+.env
+.env.*
+
+# Dossiers d’éditeur
+.vscode/
+.idea/
+.DS_Store
+
+# Système
+Thumbs.db
+Desktop.ini
