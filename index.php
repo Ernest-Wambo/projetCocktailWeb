@@ -1,5 +1,7 @@
 <?php 
     session_start();
+    include('fonctions.php');
+    include('Donnees.inc.php');
     if((isset($_GET["deconnection"]))&&($_GET["deconnection"]=="deconnection")){
         session_unset();
         session_destroy();
@@ -14,6 +16,15 @@
                 $_SESSION=$session;
         }
     }
+
+    // remet à jours le cookie
+if (isset($_SESSION["login"])) {
+    setcookie("login", $_SESSION["login"], time() + 3600*24*30, "/");
+}
+// permet de limiter les pages accessible, si jamais une pages est fausse on redirige sur la page de navigation
+$pageAuthoriser = ["page_navigation", "recettes_favoris", "formulaireConnexion", "profil"];
+$page = $_GET["page"] ?? "page_navigation";
+if (!in_array($page, $pageAuthoriser)) $page = "page_navigation";
     ?>
 
 <!DOCTYPE html>
@@ -21,13 +32,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Application Cocktail</title>
+    <link rel="stylesheet" href="/ProjetWebSiteCocktail/style.css" type="text/css">
 </head>
 <body>
     <?php include 'header.php'; ?>
-    <?php 
-    if(isset($_GET["page"]))
-        include "".$_GET["page"].".php";
-    ?>
+    <?php include $page . '.php';?>
 </body>
 </html>
