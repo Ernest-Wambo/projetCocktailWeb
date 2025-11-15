@@ -65,4 +65,48 @@ function getDescendants($aliment) {
     }
     return $descendants;
 }
+
+// Vérifie si un aliment/catégorie est connu/contenu dans Donnees.inc.php
+function estConnu($aliment, $hierarchie) {
+    $aliment = strtolower($aliment);
+
+    foreach ($hierarchie as $nom => $infos) {
+        if (strtolower($nom) === $aliment) return true;
+
+        if (isset($infos['sous-categorie'])) {
+            foreach ($infos['sous-categorie'] as $sousCat) {
+                if (strtolower($sousCat) === $aliment) return true;
+            }
+        }
+
+        if (isset($infos['super-categorie'])) {
+            foreach ($infos['super-categorie'] as $superCat) {
+                if (strtolower($superCat) === $aliment) return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+// Récupère tous les sous-éléments d'une catégorie (récursif)
+function tousLesSousElements($categorie, $hierarchie) {
+    $categorie = strtolower($categorie);
+    $resultat = [];
+
+    foreach ($hierarchie as $nom => $infos) {
+        if (strtolower($nom) === $categorie) {
+            if (isset($infos['sous-categorie'])) {
+                foreach ($infos['sous-categorie'] as $sousCat) {
+                    $resultat[] = strtolower($sousCat);
+                    $resultat = array_merge($resultat, tousLesSousElements($sousCat, $hierarchie));
+                }
+            }
+            $resultat[] = strtolower($nom);
+            break;
+        }
+    }
+
+    return array_unique($resultat);
+}
 ?>

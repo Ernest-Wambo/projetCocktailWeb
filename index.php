@@ -22,7 +22,7 @@ if (isset($_SESSION["login"])) {
     setcookie("login", $_SESSION["login"], time() + 3600*24*30, "/");
 }
 // permet de limiter les pages accessible, si jamais une pages est fausse on redirige sur la page de navigation
-$pageAuthoriser = ["page_navigation", "recettes_favoris", "formulaireConnexion", "profil"];
+$pageAuthoriser = ["page_navigation", "recettes_favoris", "formulaireConnexion", "profil","page_resultat_recherche"];
 $page = isset($_GET["page"]) ? $_GET["page"] : "page_navigation";
 if (!in_array($page, $pageAuthoriser)) $page = "page_navigation";
     ?>
@@ -33,7 +33,7 @@ if (!in_array($page, $pageAuthoriser)) $page = "page_navigation";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Application Cocktail</title>
-    <link rel="stylesheet" href="/ProjetWebSiteCocktail/style.css" type="text/css">
+    <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
     <?php include 'header.php'; ?>

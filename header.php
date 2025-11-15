@@ -1,10 +1,12 @@
 
     <header>
-        <form method="get" action=# >
+        <form method="get" action="index.php" >
+		<input type="hidden" name="page" value="page_resultat_recherche">
         <a href="?page=page_navigation"><button type="button">Navigation</button></a>
         <a href="?page=recettes_favoris"><button type="button">Recette ❤️</button></a>
         Recherche:
-        <input type="text" name="recherche"/>
+        <input type="text" name="recherche" value=
+		"<?php echo htmlspecialchars(isset($_GET['recherche']) ? $_GET['recherche'] : ''); ?>">
         <input type="submit" name="submit" value="loupe 🔍" />
         <?php if(isset($_SESSION["login"])){
             echo "".$_SESSION["login"];?>
