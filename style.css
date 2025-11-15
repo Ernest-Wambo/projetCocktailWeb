@@ -1,0 +1,83 @@
+
+
+header form > * { margin: 4px 0; }
+.layout {
+    display: flex;
+    gap: 20px; 
+    padding: 20px;
+}
+
+.sidebar {
+    flex: 1; 
+    max-width: 250px;
+    border: 2px solid #333;
+    padding: 10px;
+    max-height: 500px;
+}
+
+
+.display {
+    flex: 3; 
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 20px;
+}
+
+
+.menu {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+.navigation, .liste {
+    border: 2px solid #333;
+    border-radius: 6px;
+    padding: 10px;
+    background-color: #fff;
+    margin-bottom: 20px; 
+}
+
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+
+.cocktails {
+    border: 2px solid #333;
+    border-radius: 10px;
+    background-color: #fff;
+    width: 180px;
+    min-height: 260px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+
+.cocktails:hover {
+    transform: translateY(-4px);
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+}
+
+h2, h3 { text-align: center; }
+hr { margin: 20px 0; }
+
+

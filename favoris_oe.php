@@ -1,0 +1,17 @@
+<?php $favoris = array (
+  2 => 'Builder',
+  3 => 'Raifortissimo',
+  7 => 'Cuba libre',
+  8 => 'Coconut kiss',
+  9 => 'Frosty lime',
+  10 => 'Le vandetta',
+  11 => 'Sangria sans alcool',
+  12 => 'Mojito',
+  13 => 'Screwdriver',
+  14 => 'Shoot up',
+  15 => 'Tequila sunrise',
+  16 => 'Margarita',
+  17 => 'Black velvet',
+  18 => 'Bloody Mary',
+  19 => 'Bora bora',
+); ?>
