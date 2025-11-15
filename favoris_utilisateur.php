@@ -9,13 +9,13 @@ if (isset($_SESSION['login'])) {
     // reload fichier favoris s'il existe (recuperation depuis le fichier)
     if (file_exists($fichierFavoris)) {
         include $fichierFavoris; 
-        $_SESSION['favoris'] = isset($favoris) ? $favoris : [];
+        $_SESSION['favoris'] = isset($favoris) ? $favoris : array();
     } else {
-        $_SESSION['favoris'] = isset($_SESSION['favoris']) ? $_SESSION['favoris'] : [];
+        $_SESSION['favoris'] = isset($_SESSION['favoris']) ? $_SESSION['favoris'] : array();
     }
 } else {
     // recupèration depuis la session pour utilisateur non connecté
-    $_SESSION['favoris'] = isset($_SESSION['favoris']) ? $_SESSION['favoris'] : [];
+    $_SESSION['favoris'] = isset($_SESSION['favoris']) ? $_SESSION['favoris'] : array();
 }
 
 // toggle favoris si jamais un clique est fait
@@ -41,7 +41,7 @@ if (isset($_SESSION['login'])) {
     $filename = $_SESSION['login'] . "_favoris.inc.php";
     if (file_exists($filename)) {
         include $filename;
-        $_SESSION['favoris'] = isset($favoris) ? $favoris : [];
+        $_SESSION['favoris'] = isset($favoris) ? $favoris : array();
     }
 }
 }
