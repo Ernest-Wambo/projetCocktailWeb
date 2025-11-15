@@ -23,7 +23,7 @@ if (isset($_SESSION["login"])) {
 }
 // permet de limiter les pages accessible, si jamais une pages est fausse on redirige sur la page de navigation
 $pageAuthoriser = ["page_navigation", "recettes_favoris", "formulaireConnexion", "profil"];
-$page = $_GET["page"] ?? "page_navigation";
+$page = isset($_GET["page"]) ? $_GET["page"] : "page_navigation";
 if (!in_array($page, $pageAuthoriser)) $page = "page_navigation";
     ?>
 

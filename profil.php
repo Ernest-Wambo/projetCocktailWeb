@@ -75,7 +75,7 @@
                 $fichier = fopen($nameFile,'w');
                 file_put_contents($nameFile,"<?php \$session = ".var_export($_SESSION,true).";?>");
                 fclose($fichier);
-                header("Location: page.php");
+                header("Location: index.php");
             }
         }if($send==TRUE){
 
@@ -103,12 +103,12 @@
         echo'<span style="color:red;">le prenom est composés de lettres minuscules et/ou de lettres MAJUSCULES, ainsi que les caractères « - », « » (espace) et « ’ ». Les lettres peuvent être accentuées. Tiret et apostrophe sont forcément encadré par deux lettres, par contre plusieurs espaces sont possibles entre deux parties de prenom.</span></br>'
     ?>    
     Prénom : 
-	<input type="text" value ="<?php echo $prenom ?>" name="prenom" style="<?php if($information['nom'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 	
+	<input type="text" value ="<?php echo $prenom ?>" name="prenom" style="<?php if($information['prenom'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 	
     Date de naissance :
     <?php if($information["naissance"]==TRUE)
         echo'<span style="color:red;">la date de naissance doit être antérieure de 18 ans à la date du jour et doit être dans le format jj/mm/aaaa</span></br>'
     ?>   
-	<input type="date" value ="<?php echo $naissance ?>" name="naissance" style="<?php if($information['nom'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 	
+	<input type="date" value ="<?php echo $naissance ?>" name="naissance" style="<?php if($information['naissance'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 	
 </fieldset>
 
 

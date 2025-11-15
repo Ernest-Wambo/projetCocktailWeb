@@ -22,7 +22,7 @@ function afficherFilAriane($aliment) {
     while ($courant != "Aliment") {
         $found = false;
         foreach ($Hierarchie as $parent => $infos) {
-            if (in_array($courant, $infos["sous-categorie"] ?? [])) {
+            if (in_array($courant, isset($infos["sous-categorie"]) ? $infos["sous-categorie"] : [])) {
                 array_unshift($chemin, $parent);
                 $courant = $parent;
                 $found = true;
@@ -44,7 +44,7 @@ function afficherFilAriane($aliment) {
 function afficherSousCategories($aliment) {
     global $Hierarchie;
     if (!isset($Hierarchie[$aliment])) return;
-    $sous = $Hierarchie[$aliment]["sous-categorie"] ?? [];
+    $sous = isset($Hierarchie[$aliment]["sous-categorie"]) ? $Hierarchie[$aliment]["sous-categorie"] : [];
     if (empty($sous)) return;
 
     echo "<p><strong>Sous-catégories :</strong></p><ul>";

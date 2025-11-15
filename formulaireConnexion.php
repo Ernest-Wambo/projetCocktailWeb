@@ -93,7 +93,7 @@
                 $fichier = fopen($nameFile,'w');
                 file_put_contents($nameFile,"<?php \$session = ".var_export($_SESSION,true).";?>");
                 fclose($fichier);
-                header("Location: page.php");
+                header("Location: index.php");
             }
         }if($send==TRUE){
 
@@ -119,7 +119,7 @@
         echo '<span style="color:red;">Le login exist déja essayer en un autre</span><br>';
     ?>  
     login (obligatoire) :  
-	<input type="text" value ="<?php echo $login ?>" name="login" required="required" style="<?php if($information['login'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 
+	<input type="text" value ="<?php echo $login ?>" name="login" required="required" style="<?php if($information['login'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;'; if($information['loginExist'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;'?>" /><br /> 
     <?php if($information["motDePasse"]==TRUE)
         echo'<span style="color:red;">Le mot de passe est obligatoire</span></br>'
     ?>   

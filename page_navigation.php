@@ -4,10 +4,10 @@ include('Donnees.inc.php');
 include('favoris_utilisateur.php'); 
 
 // aliment courabt
-$alimentCourant = $_GET['aliment'] ?? "Aliment";
+$alimentCourant = isset($_GET['aliment']) ? $_GET['aliment'] : "Aliment";
 
 // recette a afficher
-$recetteDemandee = $_GET['recette'] ?? null;
+$recetteDemandee = isset($_GET['recette']) ? $_GET['recette'] : null;
 
 ?>
 
@@ -34,7 +34,7 @@ $recetteDemandee = $_GET['recette'] ?? null;
                     affichageImage(researchImage($recette["titre"]));
 
                     // modification des favori
-                    $isFav = in_array($recette["titre"], $_SESSION['favoris'] ?? []);
+                    $isFav = in_array($recette["titre"], isset($_SESSION['favoris']) ? $_SESSION['favoris'] : []);
                     $coeur = $isFav ? "❤️ Retirer des favoris" : "🤍 Ajouter aux favoris";
                     echo "<p><a href='?page=navigation&aliment=" . urlencode($alimentCourant)
                         . "&recette=" . urlencode($recette["titre"])
@@ -96,7 +96,7 @@ $recetteDemandee = $_GET['recette'] ?? null;
                 affichageImage(researchImage($recette["titre"]));
 
                 // favori
-                $isFav = in_array($recette["titre"], $_SESSION['favoris'] ?? []);
+                $isFav = in_array($recette["titre"], isset($_SESSION['favoris']) ? $_SESSION['favoris'] : []);
                 $coeur = $isFav ? "❤️" : "🤍";
                 echo "<p><a href='?page=navigation&aliment=" . urlencode($alimentCourant)
                     . "&Favoris=" . urlencode($recette["titre"]) . "'>$coeur</a></p>";
