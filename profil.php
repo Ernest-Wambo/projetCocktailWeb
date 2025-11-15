@@ -74,6 +74,7 @@
                 $nameFile = $_SESSION["login"].".inc".".php";
                 $fichier = fopen($nameFile,'w');
                 file_put_contents($nameFile,"<?php \$session = ".var_export($_SESSION,true).";?>");
+                fclose($fichier);
                 header("Location: page.php");
             }
         }if($send==TRUE){

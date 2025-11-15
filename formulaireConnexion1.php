@@ -2,12 +2,14 @@
     <?php
         $send = TRUE;
         $login = NULL; 
+        $loginExist = NULL;
         $motDePasse = NULL;
         $sexe=NULL;
         $nom=NULL;
         $prenom=NULL;
         $naissance=NULL;
         $information = array(
+                'loginExist' =>$loginExist,
                 'login'=>$login,
                 'motDePasse'=>$motDePasse,
                 'sexe'=>$sexe,
@@ -18,6 +20,8 @@
         if(isset($_POST["submit"])){
             if(isset($_POST["login"])){
                 if (preg_match('/^[a-zA-Z0-9]+$/', $_POST['login'])) {
+                    if(file_exists($_POST["login"].".inc".".php"))
+                        $information["loginExist"] = TRUE;
                     $login = $_POST['login'];
                 }else if(!empty($_POST["login"])){
                     $login=$_POST['login'];
@@ -77,7 +81,7 @@
                     $information["naissance"] = TRUE;
                 }
             }
-            if($login!=NULL&&$motDePasse!=NULL&&$information["prenom"]!==TRUE&&$information["nom"]!==TRUE&&$information["sexe"]!==TRUE&&$information["naissance"]!==TRUE&&$information["login"]!=TRUE&&$information["motDePasse"]!=TRUE){
+            if($login!=NULL&&$motDePasse!=NULL&&$information["prenom"]!==TRUE&&$information["nom"]!==TRUE&&$information["sexe"]!==TRUE&&$information["naissance"]!==TRUE&&$information["login"]!==TRUE&&$information["motDePasse"]!==TRUE&&$information["loginExist"]!==TRUE){
                 $send=false;
                 $_SESSION["login"] = $login;
                 $_SESSION["motDePasse"] = $motDePasse;
@@ -88,6 +92,7 @@
                 $nameFile = $_SESSION["login"].".inc".".php";
                 $fichier = fopen($nameFile,'w');
                 file_put_contents($nameFile,"<?php \$session = ".var_export($_SESSION,true).";?>");
+                fclose($fichier);
                 header("Location: page.php");
             }
         }if($send==TRUE){
@@ -109,6 +114,9 @@
 	<br />
     <?php if($information["login"]==TRUE)
         echo '<span style="color:red;">Le login est obligatoire et doit être composé de lettres non accentuées, minuscules ou MAJUSCULES, et/ou de chiffres</span><br>';
+    ?>  
+    <?php if($information["loginExist"]==TRUE)
+        echo '<span style="color:red;">Le login exist déja essayer en un autre</span><br>';
     ?>  
     login (obligatoire) :  
 	<input type="text" value ="<?php echo $login ?>" name="login" required="required" style="<?php if($information['login'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 
