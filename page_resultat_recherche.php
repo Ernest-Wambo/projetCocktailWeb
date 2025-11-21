@@ -1,6 +1,7 @@
 <?php
 
 include('Donnees.inc.php');
+include('favoris_utilisateur.php'); 
 
 $requete = trim($_GET['recherche'] ?? '');
 
@@ -149,7 +150,8 @@ if (!empty($resultats)) {
         $isFav = in_array($cocktail["titre"], $_SESSION['favoris'] ?? []);
         $coeur = $isFav ? "❤️" : "🤍";
 
-        echo "<p><a href='?page=navigation"
+        echo "<p><a href='?page=page_resultat_recherche"
+			. "&recherche=".  urldecode($requete)
             . "&Favoris=" . urlencode($cocktail["titre"]) . "'>$coeur</a></p>";
 
         // Score visible
