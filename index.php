@@ -3,8 +3,12 @@
     include('fonctions.php');
     include('Donnees.inc.php');
     if((isset($_GET["deconnection"]))&&($_GET["deconnection"]=="deconnection")){
+        if(isset($_SESSION["favoris"]))
+            $favoris = $_SESSION["favoris"];
         session_unset();
         session_destroy();
+        session_start();
+        $_SESSION["favoris"]= $favoris;
     }
     if(isset($_SESSION["login"]))
         setcookie("login",$_SESSION["login"]);
@@ -12,8 +16,9 @@
         $fileName = $_COOKIE["login"].".inc".".php";
         include $fileName;
         if(isset($_GET["Login"])&&isset($_GET["MotDePasse"])){
-            if(($_GET["Login"]==$session["login"])&&password_verify($_GET["MotDePasse"],$session["motDePasse"]))
+            if(($_GET["Login"]==$session["login"])&&password_verify($_GET["MotDePasse"],$session["motDePasse"])){
                 $_SESSION=$session;
+            }
         }
     }
 

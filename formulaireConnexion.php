@@ -89,9 +89,11 @@
                 $_SESSION["nom"] = $nom;
                 $_SESSION["sexe"] = $sexe;
                 $_SESSION["naissance"] = $naissance;
+                $session=$_SESSION;
+                unset($session["favoris"]);
                 $nameFile = $_SESSION["login"].".inc".".php";
                 $fichier = fopen($nameFile,'w');
-                file_put_contents($nameFile,"<?php \$session = ".var_export($_SESSION,true).";?>");
+                file_put_contents($nameFile,"<?php \$session = ".var_export($session,true).";?>");
                 fclose($fichier);
                 header("Location: index.php");
             }
