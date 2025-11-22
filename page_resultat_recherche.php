@@ -3,7 +3,7 @@
 include('Donnees.inc.php');
 include('favoris_utilisateur.php'); 
 
-$requete = trim($_GET['recherche'] ?? '');
+$requete = trim(isset($_GET['recherche']) ? $_GET['recherche'] : '');
 
 // Vérification du nombre de guillemets
 if (substr_count($requete, '"') % 2 != 0) {
@@ -147,7 +147,7 @@ if (!empty($resultats)) {
         affichageImage(researchImage($cocktail["titre"]));
 
         // Bouton favoris
-        $isFav = in_array($cocktail["titre"], $_SESSION['favoris'] ?? []);
+        $isFav = in_array($cocktail["titre"], isset($_SESSION['favoris']) ? $_SESSION['favoris'] : []);
         $coeur = $isFav ? "❤️" : "🤍";
 
         echo "<p><a href='?page=page_resultat_recherche"

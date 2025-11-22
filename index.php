@@ -1,7 +1,10 @@
 <?php 
+    //demarage d'une session
     session_start();
     include('fonctions.php');
     include('Donnees.inc.php');
+
+    //gere la déconnection d'un utilisateur en lui laissant temporairement ses favorie quand il est deconnecter 
     if((isset($_GET["deconnection"]))&&($_GET["deconnection"]=="deconnection")){
         if(isset($_SESSION["favoris"]))
             $favoris = $_SESSION["favoris"];
@@ -10,15 +13,23 @@
         session_start();
         $_SESSION["favoris"]= $favoris;
     }
+
+    //permet a l'utilisateur de se conecter 
+    $connectionFausse = FALSE;
     if(isset($_SESSION["login"]))
         setcookie("login",$_SESSION["login"]);
-    if(isset($_COOKIE["login"])){
+    if(isset($_GET["Login"])&&isset($_GET["MotDePasse"])){
+        if(isset($_COOKIE["login"])){
         $fileName = $_COOKIE["login"].".inc".".php";
         include $fileName;
-        if(isset($_GET["Login"])&&isset($_GET["MotDePasse"])){
-            if(($_GET["Login"]==$session["login"])&&password_verify($_GET["MotDePasse"],$session["motDePasse"])){
-                $_SESSION=$session;
-            }
+        }else{
+            $fileName = $_GET["Login"].".inc".".php";
+            include $fileName;
+        }
+        if(($_GET["Login"]==$session["login"])&&password_verify($_GET["MotDePasse"],$session["motDePasse"])){
+            $_SESSION=$session;
+        }else{
+            $connectionFausse=TRUE;
         }
     }
 

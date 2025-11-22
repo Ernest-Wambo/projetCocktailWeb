@@ -8,6 +8,7 @@
         $nom=NULL;
         $prenom=NULL;
         $naissance=NULL;
+        //tableau permetant le suivie de la validité des donnée
         $information = array(
                 'loginExist' =>$loginExist,
                 'login'=>$login,
@@ -17,7 +18,11 @@
                 'prenom'=>$prenom,
                 'naissance'=>$naissance,
             );
+
+        //verification de quand envoyer le formulaire
         if(isset($_POST["submit"])){
+
+            //verification du login
             if(isset($_POST["login"])){
                 if (preg_match('/^[a-zA-Z0-9]+$/', $_POST['login'])) {
                     if(file_exists($_POST["login"].".inc".".php"))
@@ -30,6 +35,8 @@
             }else{
                 $information["login"]=TRUE;
             }
+
+            //verification du mot de passe
             if(isset($_POST["motDePasse"])){
                 if (!empty(trim($_POST["motDePasse"]))) {
                     $motDePasse = password_hash($_POST['motDePasse'],PASSWORD_DEFAULT);
@@ -39,6 +46,8 @@
             }else{
                 $information["motDePasse"]=TRUE;
             }
+
+            //verification du sexe
             if(isset($_POST["sexe"])){
                 if($_POST["sexe"]=="h"||$_POST["sexe"]=="f"){
                     $sexe=$_POST['sexe'];
@@ -47,6 +56,8 @@
                     $information["sexe"] = TRUE;
                 }
             }
+
+            //verification du nom
             if(isset($_POST["nom"])){
                 if(preg_match("/^[a-zA-ZàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ]+((['-_]{1}|[ ]+){1}[a-zA-ZàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ]+)*$/u",$_POST["nom"])){
                     $nom=$_POST["nom"];
@@ -55,6 +66,8 @@
                     $information["nom"] = TRUE;
                 }
             }
+
+            //verification du prenom
             if(isset($_POST["prenom"])){
                 if(preg_match("/^[a-zA-ZàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ]+((['-_]{1}|[ ]+){1}[a-zA-ZàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ]+)*$/u",$_POST["prenom"])){
                     $prenom=$_POST["prenom"];
@@ -63,10 +76,13 @@
                     $information["prenom"] = TRUE;
                 }
             }
+
+            //verification de la date de naissance
             if(isset($_POST["naissance"])&&!empty($_POST["naissance"])){
                 $dateToday = date("d/m/Y");
                 $Date=explode("-",$_POST["naissance"]);
                 if(checkdate($Date[1],$Date[2],$Date[0])){
+                    //verification utilisateur a plus de 18ans
                     $dateNaissance = new DateTime($_POST["naissance"]);
                     $aujourdhui = new DateTime();
                     $dateNaissance->add(new DateInterval('P18Y'));
@@ -81,6 +97,7 @@
                     $information["naissance"] = TRUE;
                 }
             }
+            //creation du conte si toutes les donner necessaire sont fournie et que toute les donnée fournie sont correct
             if($login!=NULL&&$motDePasse!=NULL&&$information["prenom"]!==TRUE&&$information["nom"]!==TRUE&&$information["sexe"]!==TRUE&&$information["naissance"]!==TRUE&&$information["login"]!==TRUE&&$information["motDePasse"]!==TRUE&&$information["loginExist"]!==TRUE){
                 $send=false;
                 $_SESSION["login"] = $login;
@@ -104,6 +121,7 @@
 
 <h1>Vos données</h1>
 
+ <!-- Formulaire permettant la creation d'un conte -->
 <form method="post" action=# >
 <fieldset>
     <legend>Informations personnelles</legend>
