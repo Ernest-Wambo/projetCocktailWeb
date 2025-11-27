@@ -169,7 +169,7 @@ if (!empty($resultats)) {
         affichageImage(researchImage($cocktail["titre"]));
 
         // Bouton favoris
-        $isFav = in_array($cocktail["titre"], $_SESSION['favoris'] ?? []);
+        $isFav = in_array($cocktail["titre"], isset($_SESSION['favoris']) ? $_SESSION['favoris'] : []);
         $coeur = $isFav ? "❤️" : "🤍";
 
         echo "<p><a href='?page=page_resultat_recherche"

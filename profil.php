@@ -6,13 +6,19 @@
         $nom=$_SESSION["nom"];
         $prenom=$_SESSION["prenom"];
         $naissance=$_SESSION["naissance"];
+
+        //tableau permettant le suivie de la validité des donnée 
         $information = array(
                 'sexe'=>FALSE,
                 'nom'=>FALSE,
                 'prenom'=>FALSE,
                 'naissance'=>FALSE,
             );
+
+        //verification de quand envoyer le formulaire
         if(isset($_POST["submit"])){
+
+            //verification validité du sexe
             if(isset($_POST["sexe"])){
                 if($_POST["sexe"]=="h"||$_POST["sexe"]=="f"){
                     $sexe=$_POST['sexe'];
@@ -23,6 +29,8 @@
             }else{
                 $sexe = NULL;
             }
+
+            //verification validité nom 
             if(isset($_POST["nom"])){
                 if(preg_match("/^[a-zA-ZàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ]+((['-_]{1}|[ ]+){1}[a-zA-ZàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ]+)*$/u",$_POST["nom"])){
                     $nom=$_POST["nom"];
@@ -34,6 +42,8 @@
             }else{
                 $nom = NULL;
             }
+
+            //verification validité prenom
             if(isset($_POST["prenom"])){
                 if(preg_match("/^[a-zA-ZàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ]+((['-_]{1}|[ ]+){1}[a-zA-ZàâäéèêëîïôöùûüÿçÀÂÄÉÈÊËÎÏÔÖÙÛÜŸÇ]+)*$/u",$_POST["prenom"])){
                     $prenom=$_POST["prenom"];
@@ -45,10 +55,13 @@
             }else{
                 $prenom = NULL;
             }
+
+            //verification validité naissance
             if(isset($_POST["naissance"])&&!empty($_POST["naissance"])){
                 $dateToday = date("d/m/Y");
                 $Date=explode("-",$_POST["naissance"]);
                 if(checkdate($Date[1],$Date[2],$Date[0])){
+                    //verifie que l'utilisateur a plus de 18 ans
                     $dateNaissance = new DateTime($_POST["naissance"]);
                     $aujourdhui = new DateTime();
                     $dateNaissance->add(new DateInterval('P18Y'));
@@ -65,15 +78,22 @@
             }else {
                 $naissance= NULL;
             }
-            if($information["prenom"]!==TRUE&&$information["nom"]!==TRUE&&$information["sexe"]!==TRUE&&$information["naissance"]!==TRUE){
+            //verification qu'au moin une donnée est changer 
+            if($sexe==$_SESSION["sexe"]&&$nom==$_SESSION["nom"]&&$prenom==$_SESSION["prenom"]&&$naissance==$_SESSION["naissance"]){
+                $identique=TRUE;
+            }
+            //modification des donnée si elles sont correcte
+            if($information["prenom"]!==TRUE&&$information["nom"]!==TRUE&&$information["sexe"]!==TRUE&&$information["naissance"]!==TRUE&&$identique!==TRUE){
                 $send=false;
                 $_SESSION["prenom"] = $prenom;
                 $_SESSION["nom"] = $nom;
                 $_SESSION["sexe"] = $sexe;
                 $_SESSION["naissance"] = $naissance;
+                $session=$_SESSION;
+                unset($session["favoris"]);
                 $nameFile = $_SESSION["login"].".inc".".php";
                 $fichier = fopen($nameFile,'w');
-                file_put_contents($nameFile,"<?php \$session = ".var_export($_SESSION,true).";?>");
+                file_put_contents($nameFile,"<?php \$session = ".var_export($session,true).";?>");
                 fclose($fichier);
                 header("Location: index.php");
             }
@@ -84,8 +104,12 @@
 
 <h1>Vos données</h1>
 
+ <!-- Formulaire permettant la modification du profil -->
 <form method="post" action=# >
 <fieldset>
+    <?php if($identique==TRUE)
+        echo '<span style="color:red;">aucune information modifier</span><br>';
+    ?>  
     <legend>Informations personnelles</legend>
     <?php if($information["sexe"]==TRUE)
         echo '<span style="color:red;">Le sexe doit obligatoirement etre homme ou femme</span><br>';
