@@ -3,7 +3,7 @@
 include('Donnees.inc.php');
 include('favoris_utilisateur.php'); 
 
-$requete = trim($_GET['recherche'] ?? '');
+$requete = trim(isset($_GET['recherche']) ? $_GET['recherche'] : '');
 
 // Vérification du nombre de guillemets
 if (substr_count($requete, '"') % 2 != 0) {
@@ -12,12 +12,23 @@ if (substr_count($requete, '"') % 2 != 0) {
 }
 
 // Extraction avec regex
-preg_match_all('/([+-]?)"([^"]+)"|([+-]?)([^\s"]+)/', $requete, $resultatsRecherche);
+// Capture : 
+// 1) un groupe entre guillemets avec signe optionnel
+// 2) un mot simple avec signe optionnel
+preg_match_all('/([+-]?)"([^"]*)"|([+-]?)([^\s"]+)/', $requete, $resultatsRecherche);
+
 
 // Mots entre guillemets signe = [1], mot = [2] (si pas de signe alors $signe ="" donc ça fonctionne quand même)
 $guillemets = array_map(function($signe, $mot) {
+	global $nonReconnu;
+    // Si le mot entre guillemets commence par + ou -, syntaxe incorrecte
+    if (isset($mot[0]) && ($mot[0] === '+' || $mot[0] === '-')) {
+        $nonReconnu[] = $mot; 
+        return null; // on ne le met pas dans les mots reconnus
+    }
     return trim($signe . $mot);
 }, $resultatsRecherche[1], $resultatsRecherche[2]);
+
 
 // Mots sans guillemets signe = [3], mot = [4](si pas de signe alors $signe ="" donc ça fonctionne quand même)
 $sansGuillemets = array_map(function($signe, $mot) {
@@ -27,36 +38,30 @@ $sansGuillemets = array_map(function($signe, $mot) {
 // Fusion des deux types de mots
 $alimentsTrouves = array_filter(array_merge($guillemets, $sansGuillemets));
 
+$alimentsNonSouhaitesReconnu= array();
+$alimentsSouhaitesReconnu= array();
 
-$alimentsSouhaites = [];
-$alimentsNonSouhaites = [];
 
-// On sépare les mots en deux catégories, souhaites ou non 
-foreach ($alimentsTrouves as $a) {
-    if ($a === '') continue;
-    if ($a[0] === '-') {
-        $alimentsNonSouhaites[] = trim(substr($a, 1));
-    } else {
-        $alimentsSouhaites[] = ltrim($a, '+');
+// On vérifie si chaque mot de la recherche est dans $Hierarchie
+foreach ($alimentsTrouves as $mot) {
+	if ($mot[1]!= '-' && $mot[1] != '+'){
+		$motPur = trim($mot, '+-');  // retire le signe
+		if (estConnu($motPur, $Hierarchie)) {
+			if ($mot[0] === '-') {
+				$alimentsNonSouhaitesReconnu[] = $motPur;
+			} else {
+				$alimentsSouhaitesReconnu[] = $motPur;
+			}
+		} else {
+        $nonReconnu[] = $motPur;
+		}
     }
+	else
+		$nonReconnu[] = $mot; 	// je laisse les signes pour montrer que le probleme vient de la syntaxe car 
+								// si je passais par $motPur --citron deviendrait citron et c'est pas logique pour
+								// l'utilisateur car il pourrait croire qu'il n'y a pas de cocktail avec du citron
 }
 
-
-
-// Vérification des aliments reconnus
-$alimentsSouhaitesReconnu = [];
-$alimentsNonSouhaitesReconnu = [];
-$nonReconnu = [];
-
-foreach ($alimentsSouhaites as $a) {
-    if (estConnu($a, $Hierarchie)) $alimentsSouhaitesReconnu[] = $a;
-    else $nonReconnu[] = $a;
-}
-
-foreach ($alimentsNonSouhaites as $a) {
-    if (estConnu($a, $Hierarchie)) $alimentsNonSouhaitesReconnu[] = $a;
-    else $nonReconnu[] = $a;
-}
 
 // Si aucun aliment reconnu on signale un probleme a l'utilisateur
 if (empty($alimentsSouhaitesReconnu) && empty($alimentsNonSouhaitesReconnu)) {
@@ -73,7 +78,7 @@ else {
         echo "<p>Éléments non reconnus dans la requête : " . implode(', ', $nonReconnu) . "</p>";
 }
 
-// Calcul du score des cocktails
+// Vérification de la validité des cocktails et calcul de leur score
 $totalCriteres = count($alimentsSouhaitesReconnu) + count($alimentsNonSouhaitesReconnu);
 $resultats = [];
 
@@ -81,12 +86,29 @@ foreach ($Recettes as $cocktail) {
     $ingredients = isset($cocktail['index']) ? array_map('strtolower', $cocktail['index']) : [];
     $score = 0;
 
-    // Aliments souhaités (1 point max par critère)
+	// Vérifier d'abord les aliments non souhaités : si un est présent, on ignore le cocktail
+    $contientNonSouhaite = false;
+    foreach ($alimentsNonSouhaitesReconnu as $a) {
+        $aSousElements = tousLesSousElements($a, $Hierarchie);
+        if (!empty(array_intersect($aSousElements, $ingredients))) {
+            $contientNonSouhaite = true;
+            break; // un seul aliment non souhaité suffit pour exclure
+        }
+    }
+    if ($contientNonSouhaite) {
+        continue; // On passe au cocktail suivant
+    }
+	// On vérifie qu'il y'a au moins un élément souhaité du cocktail
+   $contientSouhaite = false;
     foreach ($alimentsSouhaitesReconnu as $a) {
         $aSousElements = tousLesSousElements($a, $Hierarchie);
         if (!empty(array_intersect($aSousElements, $ingredients))) {
-            $score++;
+            $contientSouhaite = true;
+            $score++; // On incrémente le score si critère rempli
         }
+    }
+    if (!$contientSouhaite) {
+        continue; // On ignore le cocktail si aucun élément souhaité n'est présent
     }
 
     // Aliments non souhaités (1 point max par critère)
