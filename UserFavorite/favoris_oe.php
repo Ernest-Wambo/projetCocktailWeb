@@ -11,7 +11,7 @@
   14 => 'Shoot up',
   15 => 'Tequila sunrise',
   16 => 'Margarita',
-  17 => 'Black velvet',
   18 => 'Bloody Mary',
   19 => 'Bora bora',
+  20 => 'Black velvet',
 ); ?>
