@@ -1,7 +1,8 @@
 
-    <?php
+<?php
     if(isset($_SESSION["login"])){
         $send = TRUE;
+        $identique = FALSE;
         $sexe=$_SESSION["sexe"];
         $nom=$_SESSION["nom"];
         $prenom=$_SESSION["prenom"];
@@ -91,7 +92,7 @@
                 $_SESSION["naissance"] = $naissance;
                 $session=$_SESSION;
                 unset($session["favoris"]);
-                $nameFile = $_SESSION["login"].".inc".".php";
+                $nameFile = "UserData/".$_SESSION["login"].".inc".".php";
                 $fichier = fopen($nameFile,'w');
                 file_put_contents($nameFile,"<?php \$session = ".var_export($session,true).";?>");
                 fclose($fichier);
@@ -99,41 +100,41 @@
             }
         }if($send==TRUE){
 
-    ?>
+?>
     
 
 <h1>Vos données</h1>
 
  <!-- Formulaire permettant la modification du profil -->
 <form method="post" action=# >
-<fieldset>
-    <?php if($identique==TRUE)
-        echo '<span style="color:red;">aucune information modifier</span><br>';
-    ?>  
-    <legend>Informations personnelles</legend>
-    <?php if($information["sexe"]==TRUE)
-        echo '<span style="color:red;">Le sexe doit obligatoirement etre homme ou femme</span><br>';
-    ?>  
-	Vous êtes :  
-	<input type="radio" <?php if($sexe=="f"){echo"checked=checked";}?> name="sexe" value="f"/> une femme 	
-	<input type="radio" <?php if($sexe=="h"){echo"checked=checked";}?> name="sexe" value="h"/> un homme
-	<br />
-    <?php if($information["nom"]==TRUE)
-        echo'<span style="color:red;"> le nom est composés de lettres minuscules et/ou de lettres MAJUSCULES, ainsi que les caractères « - », « » (espace) et « ’ ». Les lettres peuvent être accentuées. Tiret et apostrophe sont forcément encadré par deux lettres, par contre plusieurs espaces sont possibles entre deux parties de nom.</span></br>'
-    ?> 
-    Nom :    
-	<input type="text" value ="<?php echo $nom ?>" name="nom" style="<?php if($information['nom'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 
-    <?php if($information["prenom"]==TRUE)
-        echo'<span style="color:red;">le prenom est composés de lettres minuscules et/ou de lettres MAJUSCULES, ainsi que les caractères « - », « » (espace) et « ’ ». Les lettres peuvent être accentuées. Tiret et apostrophe sont forcément encadré par deux lettres, par contre plusieurs espaces sont possibles entre deux parties de prenom.</span></br>'
-    ?>    
-    Prénom : 
-	<input type="text" value ="<?php echo $prenom ?>" name="prenom" style="<?php if($information['prenom'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 	
-    Date de naissance :
-    <?php if($information["naissance"]==TRUE)
-        echo'<span style="color:red;">la date de naissance doit être antérieure de 18 ans à la date du jour et doit être dans le format jj/mm/aaaa</span></br>'
-    ?>   
-	<input type="date" value ="<?php echo $naissance ?>" name="naissance" style="<?php if($information['naissance'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 	
-</fieldset>
+    <fieldset>
+        <?php if($identique==TRUE)
+            echo '<span style="color:red;">aucune information modifier</span><br>';
+        ?>  
+        <legend>Informations personnelles</legend>
+        <?php if($information["sexe"]==TRUE)
+            echo '<span style="color:red;">Le sexe doit obligatoirement etre homme ou femme</span><br>';
+        ?>  
+	    Vous êtes :  
+	    <input type="radio" <?php if($sexe=="f"){echo"checked=checked";}?> name="sexe" value="f"/> une femme 	
+	    <input type="radio" <?php if($sexe=="h"){echo"checked=checked";}?> name="sexe" value="h"/> un homme
+	    <br />
+        <?php if($information["nom"]==TRUE)
+            echo'<span style="color:red;"> le nom est composés de lettres minuscules et/ou de lettres MAJUSCULES, ainsi que les caractères « - », « » (espace) et « ’ ». Les lettres peuvent être accentuées. Tiret et apostrophe sont forcément encadré par deux lettres, par contre plusieurs espaces sont possibles entre deux parties de nom.</span></br>'
+        ?> 
+        Nom :    
+	    <input type="text" value ="<?php echo $nom ?>" name="nom" style="<?php if($information['nom'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 
+        <?php if($information["prenom"]==TRUE)
+            echo'<span style="color:red;">le prenom est composés de lettres minuscules et/ou de lettres MAJUSCULES, ainsi que les caractères « - », « » (espace) et « ’ ». Les lettres peuvent être accentuées. Tiret et apostrophe sont forcément encadré par deux lettres, par contre plusieurs espaces sont possibles entre deux parties de prenom.</span></br>'
+        ?>    
+        Prénom : 
+	    <input type="text" value ="<?php echo $prenom ?>" name="prenom" style="<?php if($information['prenom'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 	
+        Date de naissance :
+        <?php if($information["naissance"]==TRUE)
+            echo'<span style="color:red;">la date de naissance doit être antérieure de 18 ans à la date du jour et doit être dans le format jj/mm/aaaa</span></br>'
+        ?>   
+	    <input type="date" value ="<?php echo $naissance ?>" name="naissance" style="<?php if($information['naissance'] === TRUE) echo 'border: 2px solid red; background-color: #ffe5e5;' ?>"/><br /> 	
+    </fieldset>
 
 
 	<br />
