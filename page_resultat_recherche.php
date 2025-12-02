@@ -98,8 +98,11 @@ foreach ($Recettes as $cocktail) {
     if ($contientNonSouhaite) {
         continue; // On passe au cocktail suivant
     }
+	
+	// Si il y'a des aliments que l'on souhaite avoir dans le cocktail
 	// On vérifie qu'il y'a au moins un élément souhaité du cocktail
-   $contientSouhaite = false;
+	if (!empty($alimentsSouhaitesReconnu)){
+	$contientSouhaite = false;
     foreach ($alimentsSouhaitesReconnu as $a) {
         $aSousElements = tousLesSousElements($a, $Hierarchie);
         if (!empty(array_intersect($aSousElements, $ingredients))) {
@@ -110,6 +113,7 @@ foreach ($Recettes as $cocktail) {
     if (!$contientSouhaite) {
         continue; // On ignore le cocktail si aucun élément souhaité n'est présent
     }
+	}
 
     // Aliments non souhaités (1 point max par critère)
     foreach ($alimentsNonSouhaitesReconnu as $a) {
@@ -143,12 +147,12 @@ if (!empty($resultats)) {
 	//On compte le nombre de recettes qui remplissent tout les critères
 	$totalPlein = count(array_filter($resultats, function($r) { return $r['score'] == 100; }));
     echo "<hr>";
-    echo "<p><b>$totalPlein</b> recette(s) satisfont entièrement la recherche.</p>";
+    echo "<p><b>$totalPlein</b> recette(s) satisfont entièrement la recherche.</p>\n";
 
 		if ($totalCriteres >= 2) {
 			//On compte le nombre de recettes qui remplissent au moins un critère
 			$totalPartiel = count(array_filter($resultats, function($r) { return $r['score'] < 100; }));
-			echo "<p><b>$totalPartiel</b> recette(s) satisfont partiellement la recherche.</p>";
+			echo "<p><b>$totalPartiel</b> recette(s) satisfont partiellement la recherche.</p>\n";
 			}
 
 	echo "<ul>";
@@ -159,7 +163,7 @@ if (!empty($resultats)) {
         echo '<div class="cocktails">';
 
         // Titre avec lien vers la fiche détaillée
-        echo "<strong><a href='?page=navigation"
+        echo "\n<strong><a href='?page=navigation"
 			. "&recherche=".  urldecode($requete)
             . "&recette=" . urlencode($cocktail["titre"]) . "'>"
             . htmlspecialchars($cocktail["titre"])
@@ -174,18 +178,18 @@ if (!empty($resultats)) {
 
         echo "<p><a href='?page=page_resultat_recherche"
 			. "&recherche=".  urldecode($requete)
-            . "&Favoris=" . urlencode($cocktail["titre"]) . "'>$coeur</a></p>";
+            . "&Favoris=" . urlencode($cocktail["titre"]) . "'>$coeur</a></p>\n";
 
         // Score visible
-        echo "<p><b>Score : " . $cocktail['score'] . "%</b></p>";
+        echo "<p><b>Score : " . $cocktail['score'] . "%</b></p>\n";
 
         // Ingrédients listés
-        echo "<p><u>Ingrédients :</u><br>";
+        echo "<p><u>Ingrédients :</u><br>\n";
         foreach ($cocktail["index"] as $ingre)
-            echo htmlspecialchars($ingre) . "<br>";
+            echo htmlspecialchars($ingre) . "<br>\n";
         echo "</p>";
 
-        echo '</div>'; //Ferme cocktails
+        echo "</div>\n"; //Ferme cocktails
     }
 
     echo '</div>'; // Ferme container
