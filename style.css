@@ -37,7 +37,15 @@ header button {
 }
 
 header button:hover {
-    background: #f0f0f0;
+    background: #ccb8e3;
+    border-color: #d5d5d5;
+}
+#fav:hover {
+    background: #ff7373;
+    border-color: #d5d5d5;
+}
+#deco:hover{
+     background: #f33e3e;
     border-color: #d5d5d5;
 }
 
@@ -62,6 +70,7 @@ header input[type="submit"] {
 header input[type="submit"]:hover {
     background: #86e9f0;
 }
+
 
 /* Login error */
 header span[style*="color:red;"] {

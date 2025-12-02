@@ -1,9 +1,9 @@
 <!-- Header principal de la page -->
 <header>
-    <div id=right-top>
+    <div id=left-top>
     <!-- bouton pour la navigation et les recette en favorie -->
     <a href="?page=page_navigation"><button type="button">Navigation</button></a>
-    <a href="?page=recettes_favoris"><button type="button">Recette ❤️</button></a>
+    <a href="?page=recettes_favoris"><button id= "fav" type="button">Recette ❤️</button></a>
     </div>
 
     <div id=buttom-middle>
@@ -11,8 +11,7 @@
     <form method="get" action="index.php">
 		<input type="hidden" name="page" value="page_resultat_recherche">
         Recherche:
-        <input type="text" name="recherche" value=
-		"<?php echo htmlspecialchars(isset($_GET['recherche']) ? $_GET['recherche'] : ''); ?>">
+        <input type="text" name="recherche" value="<?php echo htmlspecialchars(isset($_GET['recherche']) ? $_GET['recherche'] : ''); ?>">
         <input type="submit" name="submit" value="loupe 🔍" />
     </form>
     </div>
@@ -22,7 +21,7 @@
     <?php if(isset($_SESSION["login"])){
         echo "".$_SESSION["login"];?>
         <a href="?page=profil"><button type="button">Profil</button></a>
-        <a href="?deconnection=deconnection"><button type="button">se déconnecter</button></a>
+        <a href="?deconnection=deconnection"><button id= "deco" type="button">se déconnecter</button></a>
     <?php }else{ ?>
             
     <!-- Formulaire permettant la connection d'un utilisateur -->
