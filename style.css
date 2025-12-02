@@ -1,25 +1,154 @@
+/* ---------------------------------------------------
+   HEADER — VERSION RESPONSIVE & MOBILE FIRST
+----------------------------------------------------*/
+header {
+    background: #ffffff;
+    border: 2px solid #111010;
+    border-radius: 6px;
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Groupes dans le header */
+header #right-top,
+header #buttom-middle {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Boutons */
+header button {
+    background: #f8f8f8;
+    border: 1px solid #101010;
+    padding: 7px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.15s ease-in-out;
+}
+a {
+  text-decoration: none;
+}
+header button:hover {
+    background: #ccb8e3;
+    border-color: #d5d5d5;
+}
+#fav:hover {
+    background: #ff7373;
+    border-color: #d5d5d5;
+}
+#deco:hover{
+     background: #f33e3e;
+    border-color: #d5d5d5;
+}
+
+/* Inputs */
+header input[type="text"] {
+    padding: 7px 10px;
+    border: 1px solid #111111;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    background: #fafafa;
+}
+
+header input[type="submit"] {
+    background: #ededed;
+    border: 1px solid #dcdcdc;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.15s;
+}
+
+header input[type="submit"]:hover {
+    background: #86e9f0;
+}
 
 
-header form > * { margin: 4px 0; }
+/* Login error */
+header span[style*="color:red;"] {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* ---------------------------------------------------
+   RESPONSIVE — MOBILE FIRST
+----------------------------------------------------*/
+
+/* 📱 0–600 px — Format smartphone */
+@media (max-width: 600px) {
+
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 15px;
+        gap: 15px;
+    }
+
+    header #right-top,
+    header #buttom-middle {
+        flex-direction: column;
+        width: 100%;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    header input[type="text"],
+    header input[type="submit"],
+    header button {
+        width: 100%; /* Largeur complète sur mobile */
+    }
+}
+
+/* 📱➡️💻 600–900 px — Tablettes */
+@media (max-width: 900px) and (min-width: 601px) {
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    header #right-top,
+    header #buttom-middle {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+}
+
+/* ---------------------------------------------------
+   RESTE DU STYLE (inchangé)
+----------------------------------------------------*/
+
 .layout {
     display: flex;
-    gap: 20px; 
-    padding: 20px;
+    gap: 20px;
+    align-items: flex-start;
 }
 
 .sidebar {
-    flex: 1; 
-    max-width: 250px;
+    flex: 0 0 250px;
     border: 2px solid #333;
     padding: 10px;
-    max-height: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 6px;
 }
-
 
 .display {
-    flex: 3; 
+    flex: 3;
 }
-
 
 body {
     font-family: Arial, sans-serif;
@@ -27,29 +156,23 @@ body {
     margin: 20px;
 }
 
-
 .menu {
     margin-bottom: 20px;
     text-align: center;
 }
-
 
 .navigation, .liste {
     border: 2px solid #333;
     border-radius: 6px;
     padding: 10px;
     background-color: #fff;
-    margin-bottom: 20px; 
+    margin-bottom: 20px;
 }
 
-
 .container {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 20px;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: 10px;
 }
 
 
@@ -68,16 +191,212 @@ body {
     padding: 10px;
     margin: 5px;
     box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-
 .cocktails:hover {
-    transform: translateY(-4px);
-    box-shadow: 3px 3px 10px rgba(0,0,0,0.2);
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.2);
 }
 
 h2, h3 { text-align: center; }
 hr { margin: 20px 0; }
+@media (max-width: 850px) {
+    .layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        flex: none;
+    }
+}
+@media (max-width: 600px) {
+    body {
+        font-size: 0.95rem;
+    }
+    h2, h3 {
+        font-size: 1.1rem;
+    }
+}
+/* Formulaire */
+/* ---------------------------------------------------
+   PAGE PROFIL - STYLE GLOBAL
+----------------------------------------------------*/
+.profil-container {
+    max-width: 700px;
+    margin: 20px auto;
+    background: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 20px 25px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+}
 
+/* Titre */
+.profil-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
 
+/* Fieldset */
+.profil-container fieldset {
+    border: 2px solid #333;
+    padding: 15px;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.profil-container legend {
+    font-weight: bold;
+    padding: 0 8px;
+}
+
+/* LABELS + Inputs */
+.profil-container input[type="text"],
+.profil-container input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0 15px;
+    border: 1px solid #111;
+    border-radius: 6px;
+    background: #f9f9f9;
+    font-size: 0.95rem;
+}
+
+/* Inputs radio */
+.profil-container input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Messages d'erreur */
+.profil-container .error {
+    color: red;
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Bouton Valider */
+.profil-container input[type="submit"] {
+    background: #ededed;
+    border: 1px solid #333;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.15s;
+    display: block;
+    margin: 10px auto 0;
+}
+
+.profil-container input[type="submit"]:hover {
+    background: #d4f1f6;
+}
+
+/* ---------------------------------------------------
+    RESPONSIVE
+----------------------------------------------------*/
+@media (max-width: 600px) {
+
+    .profil-container {
+        padding: 15px;
+    }
+
+    .profil-container input[type="text"],
+    .profil-container input[type="date"] {
+        font-size: 1rem;
+    }
+
+    .profil-container input[type="submit"] {
+        width: 100%;
+    }
+}
+/* partie inscription */
+/* ---------------------------------------------------
+   PAGE CREATION COMPTE - CONTAINER
+----------------------------------------------------*/
+.register-container {
+    max-width: 700px;
+    margin: 25px auto;
+    background: #fff;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 20px 25px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Titre */
+.register-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Fieldset */
+.register-container fieldset {
+    border: 2px solid #333;
+    padding: 15px;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.register-container legend {
+    font-weight: bold;
+    padding: 0 8px;
+}
+
+/* Inputs */
+.register-container input[type="text"],
+.register-container input[type="date"],
+.register-container input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin: 6px 0 15px;
+    border: 1px solid #111;
+    border-radius: 6px;
+    background: #f9f9f9;
+    font-size: 0.95rem;
+}
+
+/* Radio buttons */
+.register-container input[type="radio"] {
+    margin-right: 5px;
+}
+
+/* Erreurs */
+.register-container .error {
+    color: red;
+    font-size: 0.85rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Bouton Valider */
+.register-container input[type="submit"] {
+    background: #ededed;
+    border: 1px solid #333;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.15s;
+    display: block;
+    margin: 10px auto 0;
+}
+
+.register-container input[type="submit"]:hover {
+    background: #d4f1f6;
+}
+
+/* ---------------------------------------------------
+   RESPONSIVE
+----------------------------------------------------*/
+@media (max-width: 600px) {
+
+    .register-container {
+        padding: 15px;
+    }
+
+    .register-container input[type="submit"] {
+        width: 100%;
+    }
+}

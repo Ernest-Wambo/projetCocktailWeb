@@ -32,12 +32,12 @@ function afficherFilAriane($aliment) {
         if (!$found) break;
     }
 
-    echo "<p><strong>Aliment courant </strong><br><br>";
+    echo "<p><strong>Aliment courant </strong><br><br>\n";
     foreach ($chemin as $i => $nom) {
         if ($i > 0) echo " / ";
-        echo '<a href="?page=navigation&aliment=' . urlencode($nom) . '">' . htmlspecialchars($nom) . '</a>';
+        echo '<a href="?page=navigation&aliment=' . urlencode($nom) . '">' . htmlspecialchars($nom) . '</a>'."\n";
     }
-    echo "</p>";
+    echo "</p>\n";
 }
 
 // affichage des sous catergories d'une categories d'aliment
@@ -47,9 +47,9 @@ function afficherSousCategories($aliment) {
     $sous = isset($Hierarchie[$aliment]["sous-categorie"]) ? $Hierarchie[$aliment]["sous-categorie"] : array();
     if (empty($sous)) return;
 
-    echo "<p><strong>Sous-catégories :</strong></p><ul>";
+    echo "<p><strong>Sous-catégories :</strong></p><ul>\n";
     foreach ($sous as $s) {
-        echo "<li><a href='?page=navigation&aliment=" . urlencode($s) . "'>" . htmlspecialchars($s) . "</a></li>";
+        echo "<li><a href='?page=navigation&aliment=" . urlencode($s) . "'>" . htmlspecialchars($s) . "</a></li>\n";
     }
     echo "</ul>";
 }
