@@ -69,11 +69,11 @@
                     if($dateNaissance <= $aujourdhui){
                         $naissance = $_POST["naissance"];
                     }else if(!empty($_POST["naissance"])){
-                        $nom=$_POST['naissance'];
+                        $naissance=$_POST['naissance'];
                         $information["naissance"] = TRUE; 
                     }
                 }else if(!empty($_POST["naissance"])){
-                    $nom=$_POST['naissance'];
+                    $naissance=$_POST['naissance'];
                     $information["naissance"] = TRUE; 
                 }
             }else {
