@@ -4,5 +4,5 @@
   'prenom' => NULL,
   'nom' => 'paul',
   'sexe' => 'h',
-  'naissance' => NULL,
+  'naissance' => '2004-06-08',
 );?>
