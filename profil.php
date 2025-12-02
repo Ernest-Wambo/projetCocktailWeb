@@ -102,7 +102,7 @@
 
 ?>
     
-
+<div class="profil-container">
 <h1>Vos données</h1>
 
  <!-- Formulaire permettant la modification du profil -->
@@ -141,6 +141,7 @@
 <input type="submit" name="submit" value="Valider" />
          
 </form>
+        </div>
 <?php
     }
 }

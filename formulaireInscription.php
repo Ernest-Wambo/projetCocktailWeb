@@ -118,7 +118,7 @@
 
 ?>
     
-
+<div class ="register-container">
 <h1>Vos données</h1>
 
  <!-- Formulaire permettant la creation d'un conte -->
@@ -167,6 +167,7 @@
     <input type="submit" name="submit" value="Valider" />
          
 </form>
+        </div>
 <?php
     }
 ?>

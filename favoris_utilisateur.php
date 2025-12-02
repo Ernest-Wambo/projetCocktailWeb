@@ -4,7 +4,7 @@ include('Donnees.inc.php');
 // --- reload les favoris pour utilisateur connecté
 if (isset($_SESSION['login'])) {
     $login = $_SESSION['login'];
-    $fichierFavoris = "favoris_{$login}.php";
+    $fichierFavoris = "UserFavorite/favoris_{$login}.php";
 
     // reload fichier favoris s'il existe (recuperation depuis le fichier)
     if (file_exists($fichierFavoris)) {
@@ -38,7 +38,7 @@ if (isset($_GET['Favoris'])) {
 
     // Restaurer les favoris depuis fichier si utilisateur connecté
 if (isset($_SESSION['login'])) {
-    $filename = $_SESSION['login'] . "_favoris.inc.php";
+    $filename = "UserFavorite/favoris_".$_SESSION['login'] . ".php";
     if (file_exists($filename)) {
         include $filename;
         $_SESSION['favoris'] = isset($favoris) ? $favoris : array();
