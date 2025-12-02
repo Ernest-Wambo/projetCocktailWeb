@@ -35,7 +35,9 @@ header button {
     font-size: 0.9rem;
     transition: 0.15s ease-in-out;
 }
-
+a {
+  text-decoration: none;
+}
 header button:hover {
     background: #ccb8e3;
     border-color: #d5d5d5;
