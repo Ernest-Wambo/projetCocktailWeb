@@ -152,7 +152,9 @@ if (!empty($resultats)) {
 		if ($totalCriteres >= 2) {
 			//On compte le nombre de recettes qui remplissent au moins un critère
 			$totalPartiel = count(array_filter($resultats, function($r) { return $r['score'] < 100; }));
-			echo "<p><b>$totalPartiel</b> recette(s) satisfont partiellement la recherche.</p>\n";
+			// Si il y'en a au moins une alors on le signale à l'utilisateur
+			if ($totalPartiel>0)
+				echo "<p><b>$totalPartiel</b> recette(s) satisfont partiellement la recherche.</p>\n";
 			}
 
 	echo "<ul>";
