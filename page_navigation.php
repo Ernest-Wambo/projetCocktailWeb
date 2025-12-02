@@ -23,7 +23,7 @@ $recetteDemandee = isset($_GET['recette']) ? $_GET['recette'] : null;
     <!-- right tiles display with the recepie -->
     <div class="display">
         <?php
-        echo "<div class=\"liste\">";
+        echo "<div class=\"liste\">\n";
 
         // --- affichagr detaille des recettes ---
         if ($recetteDemandee) {
@@ -38,18 +38,18 @@ $recetteDemandee = isset($_GET['recette']) ? $_GET['recette'] : null;
                     $coeur = $isFav ? "❤️ Retirer des favoris" : "🤍 Ajouter aux favoris";
                     echo "<p><a href='?page=navigation&aliment=" . urlencode($alimentCourant)
                         . "&recette=" . urlencode($recette["titre"])
-                        . "&Favoris=" . urlencode($recette["titre"]) . "'>$coeur</a></p>";
+                        . "&Favoris=" . urlencode($recette["titre"]) . "'>$coeur</a></p>\n";
 
                     // Ingrédients
-                    echo "<h3>Ingrédients :</h3><ul>";
+                    echo "<h3>Ingrédients :</h3>\n <ul>\n";
                     foreach (explode('|', $recette["ingredients"]) as $ingredient)
-                        echo "<li>" . htmlspecialchars(trim($ingredient)) . "</li>";
+                        echo "<li>" . htmlspecialchars(trim($ingredient)) . "</li>\n";
                     echo "</ul>";
 
                     // Préparation
-                    echo "<h3>Préparation :</h3><p>" . htmlspecialchars($recette["preparation"]) . "</p>";
+                    echo "<h3>Préparation :</h3><p>" . htmlspecialchars($recette["preparation"]) . "</p>\n";
 
-                    echo "<p><a href='?page=navigation&aliment=" . urlencode($alimentCourant) . "'>← Retour</a></p>";
+                    echo "<p><a href='?page=navigation&aliment=" . urlencode($alimentCourant) . "'> Retour</a></p>\n";
                     exit;
                 }
             }
@@ -73,9 +73,10 @@ $recetteDemandee = isset($_GET['recette']) ? $_GET['recette'] : null;
 
         echo "<p><strong>Liste des cocktails contenant : "
             . htmlspecialchars($alimentCourant)
-            . " ($nbRecettes recette" . ($nbRecettes > 1 ? "s" : "") . ")</strong></p>";
+            . " ($nbRecettes recette" . ($nbRecettes > 1 ? "s" : "") . ")</strong></p>\n";
 
         echo '<div class="container">';
+        echo "\n";
         foreach ($Recettes as $recette) {
             $contient = false;
             foreach ($recette["index"] as $ingredient) {
@@ -88,22 +89,24 @@ $recetteDemandee = isset($_GET['recette']) ? $_GET['recette'] : null;
             }
 
             if ($contient || $alimentCourant == "Aliment") {
+                echo "\n";
                 echo '<div class="cocktails">';
-                echo "<strong><a href='?page=navigation&aliment=" . urlencode($alimentCourant)
+
+                echo "\n<strong><a href='?page=navigation&aliment=" . urlencode($alimentCourant)
                      . "&recette=" . urlencode($recette["titre"]) . "'>"
-                     . htmlspecialchars($recette["titre"]) . "</a></strong>";
+                     . htmlspecialchars($recette["titre"]) . "</a></strong> \n";
 
                 affichageImage(researchImage($recette["titre"]));
 
                 // favori
                 $isFav = in_array($recette["titre"], isset($_SESSION['favoris']) ? $_SESSION['favoris'] : array());
                 $coeur = $isFav ? "❤️" : "🤍";
-                echo "<p><a href='?page=navigation&aliment=" . urlencode($alimentCourant)
-                    . "&Favoris=" . urlencode($recette["titre"]) . "'>$coeur</a></p>";
+                echo "\n<p><a href='?page=navigation&aliment=" . urlencode($alimentCourant)
+                    . "&Favoris=" . urlencode($recette["titre"]) . "'>$coeur</a></p>\n";
 
                 // liste ingredient
                 foreach ($recette["index"] as $ing)
-                    echo htmlspecialchars($ing) . "<br>";
+                    echo htmlspecialchars($ing) . "<br>\n";
 
                 echo '</div>';
             }

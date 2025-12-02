@@ -14,4 +14,5 @@
   18 => 'Bloody Mary',
   19 => 'Bora bora',
   20 => 'Black velvet',
+  21 => 'Alerte à Malibu (cocktail de la couleurs des fameux maillots de bains... ou presque)',
 ); ?>
