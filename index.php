@@ -4,6 +4,12 @@
     include('fonctions.php');
     include('Donnees.inc.php');
 
+    //supprime le cookie si la session a expiré mais que le cookie est encore la
+    if (!isset($_SESSION["login"]) && isset($_COOKIE["login"])) {
+        setcookie("login", "", time() - 3600, "/");
+        unset($_COOKIE["login"]);
+    }
+
     //gere la déconnection d'un utilisateur en lui laissant temporairement ses favorie quand il est deconnecter 
     if((isset($_GET["deconnection"]))&&($_GET["deconnection"]=="deconnection")){
         $favoris = [];
@@ -21,20 +27,15 @@
     if(isset($_POST["Login"])&&isset($_POST["MotDePasse"])){
 
         if(file_exists("UserData/".$_POST["Login"].".inc".".php")){
-
-            if(isset($_COOKIE["login"])){
-                $fileName = "UserData/".$_COOKIE["login"].".inc".".php";
-                include $fileName;
-            }else{
-                $fileName = "UserData/".$_POST["Login"].".inc".".php";
-                include $fileName;
-            }
+            $fileName = "UserData/".$_POST["Login"].".inc".".php";
+            include $fileName;
             if(($_POST["Login"]==$session["login"])&&password_verify($_POST["MotDePasse"],$session["motDePasse"])){
-                $favoris = isset($_SESSION["favoris"]) ? $_SESSION["favoris"] : array();
+                $fileNameFavorie = "UserFavorite/"."favoris_".$_POST["Login"].".php";
+                include $fileNameFavorie;
                 $_SESSION=$session;
                 $_SESSION["favoris"] = $favoris;
                 if(isset($_SESSION["login"]))
-                    setcookie("login",$_SESSION["login"], time() + 3600*24*30, "/");
+                    setcookie("login",$_SESSION["login"], time() + 3600, "/");
             }else{
                 $connectionFausse=TRUE;
             }

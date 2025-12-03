@@ -100,12 +100,15 @@
         //creation du conte si toutes les donner necessaire sont fournie et que toute les donnée fournie sont correct
         if($login!=NULL&&$motDePasse!=NULL&&$information["prenom"]!==TRUE&&$information["nom"]!==TRUE&&$information["sexe"]!==TRUE&&$information["naissance"]!==TRUE&&$information["login"]!==TRUE&&$information["motDePasse"]!==TRUE&&$information["loginExist"]!==TRUE){
             $send=false;
+            session_unset();
             $_SESSION["login"] = $login;
             $_SESSION["motDePasse"] = $motDePasse;
             $_SESSION["prenom"] = $prenom;
             $_SESSION["nom"] = $nom;
             $_SESSION["sexe"] = $sexe;
             $_SESSION["naissance"] = $naissance;
+            if(isset($_SESSION["login"]))
+                    setcookie("login",$_SESSION["login"], time() + 3600, "/");
             $session=$_SESSION;
             unset($session["favoris"]);
             $nameFile = "UserData/".$_SESSION["login"].".inc".".php";
