@@ -172,13 +172,14 @@ if (!empty($resultats)) {
             . "</a></strong>";
 
         // Image du cocktails
+        echo "\n";
         affichageImage(researchImage($cocktail["titre"]));
 
         // Bouton favoris
         $isFav = in_array($cocktail["titre"], isset($_SESSION['favoris']) ? $_SESSION['favoris'] : []);
         $coeur = $isFav ? "❤️" : "🤍";
 
-        echo "<p><a href='?page=page_resultat_recherche"
+        echo "<p>\n<a href='?page=page_resultat_recherche"
 			. "&recherche=".  urldecode($requete)
             . "&Favoris=" . urlencode($cocktail["titre"]) . "'>$coeur</a></p>\n";
 
